@@ -9,24 +9,38 @@ public class GameOfChoices {
 	//declare any global variables needed
 	static Scanner sc = new Scanner(System.in);
 	static String name, hair, house;
+	static int savedWolf=0;
 
 	public static void main(String[] args) {
 		
-		System.out.println("Welcome to the Game of Thrones!!! err Choices!!!\n");
-		//take user info!
-		System.out.print("Enter your name: ");
-		name = sc.nextLine();
-		System.out.print("Enter your hair color: ");
-		hair = sc.nextLine().toLowerCase();
+		boolean cont = true;
 		
-		//send user to stark storyline
-		stark(1);
-		System.out.println("THE END!\nThanks for playing!");
+		//quick intro
+		System.out.println("Welcome to the Game of Thrones!!! err Choices!!!\n");
+		
+		while (cont) {
+			//take user info!
+			System.out.print("Enter your name: ");
+			name = sc.nextLine();
+			System.out.print("Enter your hair color: ");
+			hair = sc.nextLine().toLowerCase();
+			//send user to stark story line
+			stark(1);
+			
+			//ask user to play again
+			System.out.print("\nThanks for playing!\nTry again? (y/n)");
+			if (!sc.next().equalsIgnoreCase("y")) {
+				cont = false;
+				System.out.println("\nGoodbye!");
+			}
+			savedWolf=0;
+			sc.nextLine();
+		}
 	}
 	
 	//story arc for the stark family
 	public static void stark(int storyPoint){
-		int choice=0, savedWolf=0;
+		int choice=0;
 		
 		switch(storyPoint){
 		case 1: 
@@ -37,7 +51,10 @@ public class GameOfChoices {
 			choice = setRange("What do you do? \n1. Avoid the dire wolf. \n2. Help the dire wolf.", 2);
 			if(choice==1)
 				stark(2);
-			else stark(3);
+			else {
+				savedWolf=1;
+				stark(3);
+			}
 			break;
 		case 2: 
 			System.out.println("You keep a good distance between yourself and the dire wolf as you walk around. "+
@@ -51,11 +68,10 @@ public class GameOfChoices {
 		
 			break;
 		case 3: 
-			savedWolf=1;
 			System.out.println("You slowly walk up to the dire wolf. It growls at you and lowers it's head. "+
 					"\nIt doesn't phase you, you slowly reach for the bear trap and struggle to pull it open. "+
 					"\nThe wolf quickly pulls its leg out of the trap and runs off. You watch as it disappears into the forest."
-					+ "\n Do you?");
+					+ "\nDo you?");
 			System.out.println("1.Continue on your patrol. \n2.Turn back and seek warmth.");
 			choice = setRange("1.Continue on your patrol. \n2.Turn back and seek warmth.", 2);
 			if(choice==1)
@@ -75,7 +91,13 @@ public class GameOfChoices {
 				stark(7);
 			break;
 		case 5: 
-			
+			System.out.println("It's TOO cold and you've had enough of it. You start to make your way back"
+					+ "\nbut you hear a noise deeper in the forest. \nDo you?");
+			System.out.println("1.Continue on your patrol. \n2.Keep heading back.");
+			choice = setRange("1.Continue on your patrol. \n2.Keep heading back.", 2);
+			if(choice==1)
+				stark(4);
+			else stark(8);
 			break;
 		case 6:
 			if(savedWolf==1)
@@ -83,26 +105,42 @@ public class GameOfChoices {
 						+"\nAs it's about to grab you the dire wolf slams into the whitewalker taking it to the ground!"
 						+ "\nGiving you just enough time to draw your sword and take off the whitewalker's head."
 						+ "\nAs the dire wolf heads back into the forest you take the head of the whitewalker"
-						+ "\n back to Winterfell to warn everyone of their return.");
+						+ "\nback to Winterfell to warn everyone of their return..."
+						+ "\nTHE END!");
 			else
 				System.out.println("Before you can react it's in front of you, arms stretching for you!"
 						+"\nYou try to unsheath your sword but it's too late, the whitewalker grabs you and"
 						+ "\nslams you to the ground. Your vision goes black from the impact and the last thing"
-						+ "\nyou feel is the wet feeling of your blood pooling around you...");
+						+ "\nyou feel is the wet feeling of your blood pooling around you..."
+						+ "\nGAME OVER!");
 			break;
 		case 7:
 			if(savedWolf==1)
 				System.out.println("Before you can react it's in front of you, arms stretching for you!"
 						+"\nAs it's about to grab you the dire wolf slams into the whitewalker taking it to the ground!"
 						+ "\nGiving you just enough time to make a run for it."
-						+ "\nYou hear the wolf cry out in pain as you run back to Winterfell.");
+						+ "\nYou hear the wolf cry out in pain as you run back to Winterfell."
+						+ "\nYou find Ned Stark in the stable preparing a horse and you tell him"
+						+ "\nof the whitewalker. He's skeptical at first but would rather believe you"
+						+ "\nthan ignore the warning and suffer the consequences. He sends a crow"
+						+ "\nto the other houses, spreading the message that winter has come..."
+						+ "\nTHE END!");
 			else
 				System.out.println("Before you can react it's in front of you, arms stretching for you!"
 						+"\nYou try to run but it's too late, the whitewalker grabs you and"
 						+ "\nslams you to the ground. Your vision goes black from the impact and the last thing"
-						+ "\nyou feel is the wet feeling of your blood pooling around you...");
+						+ "\nyou feel is the wet feeling of your blood pooling around you..."
+						+ "\nGAME OVER!");
+			break;
+		case 8:
+			System.out.println("You're in your house now, sitting in front of a warm fire. As the feeling"
+					+ "\nreturns to your hands and face you hear a scream from the courtyard. You jump to"
+					+ "\nyour feet and open your door. Looking out you see a whitewalker covered in"
+					+ "\nsomeone's blood. The noise you heard in the forest earrlier, could that have"
+					+ "\nbeen the whitewalker? If only you looked into it, a life could have been spared..."
+					+ "\nGAME OVER!");
+			break;
 		}
-		
 		
 	}
 	
